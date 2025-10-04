@@ -12,6 +12,15 @@
 - 使用小驼峰命名法（camelCase）进行命名
 - 变量名、函数名、方法名等应具有描述性，避免使用单字母或无意义的缩写
 
+#### 命名实例：
+- **局部变量**：`userName`, `totalCount`, `isActive`
+- **全局变量**：`globalConfig`, `apiEndpoint`, `maxRetryCount`
+- **函数名**：`calculateTotal`, `getUserInfo`, `validateInput`
+- **方法名**：`getData`, `setData`, `handleClick`
+- **常量**：虽然命名规范要求使用小驼峰，但常量应全大写加下划线，如 `MAX_CONNECTIONS`, `DEFAULT_TIMEOUT`
+- **枚举量**：`Color.Red`, `Status.Pending`, `UserRole.Admin`
+- **类名**：虽然通用规范是小驼峰，但类名应使用大驼峰命名法（PascalCase），如 `UserService`, `DataProcessor`
+
 ## Python 编码规范
 
 遵循 PEP 8 规范，并结合项目特定要求：
@@ -19,6 +28,10 @@
 ### 1. 缩进
 - 使用4个空格进行缩进，不使用制表符
 - 续行应与括号内的内容对齐或使用悬挂缩进
+- 控制结构（if、else、elif、for、while、try、except等）后的冒号后应换行并缩进
+- 嵌套的控制结构应逐层缩进
+- 控制结构的关键字（if、for、while等）与左括号之间不添加空格
+- 控制结构的左括号与右括号之间应适当添加空格
 
 ### 2. 空格使用
 - 在逗号后、操作符周围适当添加空格

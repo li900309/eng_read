@@ -2,11 +2,9 @@ from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from flask import current_app, request
 from sqlalchemy import and_, or_, func
-from app.models.vocabulary import Vocabulary, VocabularyCategory, VocabularyExample
+from app.models.vocabulary import Vocabulary, VocabularyCategory, UserVocabulary
 from app.models.user import User
-from app.models.learning import UserVocabulary
 from app.extensions import db, cache
-from app.utils.decorators import validatePagination
 
 
 class VocabularyService:

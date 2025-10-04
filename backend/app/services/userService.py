@@ -3,7 +3,8 @@ from datetime import datetime, timedelta
 from flask import current_app
 from werkzeug.security import check_password_hash
 from app.models.user import User, UserAchievement
-from app.models.learning import UserVocabulary, LearningSession
+from app.models.vocabulary import UserVocabulary
+from app.models.learning import LearningSession
 from app.extensions import db, cache
 from app.utils.auth import generateTokens, validatePassword
 from app.utils.validators import validateEmail, validateUsername

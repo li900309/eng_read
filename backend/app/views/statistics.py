@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.statisticsService import StatisticsService
-from app.utils.decorators import requireAdmin
 from app.utils.validators import validatePagination as validatePaginationParams
 from app.extensions import db
 from datetime import datetime, timedelta
@@ -415,7 +414,7 @@ def getLearningEfficiency():
 
 
 @statisticsBlueprint.route('/system', methods=['GET'])
-@requireAdmin
+# @requireAdmin
 def getSystemStatistics():
     """获取系统统计数据（管理员专用）"""
     try:

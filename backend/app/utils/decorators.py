@@ -9,7 +9,7 @@ from functools import wraps
 from typing import Any, Dict, List, Optional, Callable
 
 from flask import request, jsonify, g
-from flask_jwt_extended import getJwtIdentity, verifyJwtInRequest
+from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
 
 from app.utils.auth import getCurrentUser
 
@@ -190,8 +190,8 @@ def setCurrentUser(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            verifyJwtInRequest()
-            userId = getJwtIdentity()
+            verify_jwt_in_request()
+            userId = get_jwt_identity()
             user = getCurrentUser() if userId else None
             g.currentUser = user
             g.currentUserId = userId

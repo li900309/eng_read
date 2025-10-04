@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.learningService import LearningService
-from app.utils.decorators import validatePagination
 from app.utils.validators import validatePagination as validatePaginationParams
 from datetime import datetime
 
@@ -367,7 +366,6 @@ def getLearningStats():
 
 @learningBlueprint.route('/sessions', methods=['GET'])
 @jwt_required()
-@validatePagination
 def getLearningSessions():
     """获取学习会话列表"""
     try:

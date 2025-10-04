@@ -4,7 +4,8 @@ from flask import current_app
 from sqlalchemy import and_, or_, func, extract
 from app.models.user import User, UserAchievement
 from app.models.vocabulary import Vocabulary, VocabularyCategory
-from app.models.learning import UserVocabulary, LearningSession, SessionWord
+from app.models.vocabulary import UserVocabulary
+from app.models.learning import LearningSession
 from app.extensions import db, cache
 
 

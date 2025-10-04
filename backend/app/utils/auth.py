@@ -9,12 +9,12 @@ from typing import Optional, Dict, Any
 
 from flask import current_app, request, jsonify
 from flask_jwt_extended import (
-    createAccessToken, createRefreshToken, getJwtIdentity,
-    getJwt, verifyJwtInRequest
+    create_access_token, create_refresh_token, get_jwt_identity,
+    get_jwt, verify_jwt_in_request
 )
 from werkzeug.security import check_password_hash
 
-from app.extensions import getJWT
+from app.extensions import getJwt
 
 
 def generateTokens(userId: int, rememberMe: bool = False) -> Dict[str, Any]:
@@ -34,15 +34,15 @@ def generateTokens(userId: int, rememberMe: bool = False) -> Dict[str, Any]:
         'type': 'access'
     }
 
-    accessToken = createAccessToken(
+    accessToken = create_access_token(
         identity=userId,
-        additionalClaims=additionalClaims,
-        expiresDelta=accessTokenExpires
+        additional_claims=additionalClaims,
+        expires_delta=accessTokenExpires
     )
 
-    refreshToken = createRefreshToken(
+    refreshToken = create_refresh_token(
         identity=userId,
-        expiresDelta=refreshTokenExpires
+        expires_delta=refreshTokenExpires
     )
 
     return {
@@ -64,7 +64,7 @@ def validatePassword(user, password: str) -> bool:
 def getCurrentUserId() -> Optional[int]:
     """获取当前用户ID"""
     try:
-        return getJwtIdentity()
+        return get_jwt_identity()
     except Exception:
         return None
 
@@ -83,7 +83,7 @@ def requireAuth(f):
     @wraps(f)
     def decoratedFunction(*args, **kwargs):
         try:
-            verifyJwtInRequest()
+            verify_jwt_in_request()
             return f(*args, **kwargs)
         except Exception as e:
             return jsonify({
@@ -102,7 +102,7 @@ def requireFreshAuth(f):
     @wraps(f)
     def decoratedFunction(*args, **kwargs):
         try:
-            verifyJwtInRequest(fresh=True)
+            verify_jwt_in_request(fresh=True)
             return f(*args, **kwargs)
         except Exception as e:
             return jsonify({

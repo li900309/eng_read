@@ -6,7 +6,8 @@
       "Read(//mnt/c/lyz/bdc/**)",
       "Bash(git commit:*)",
       "Bash(cat:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(uv run:*)"
     ],
     "deny": [],
     "ask": []

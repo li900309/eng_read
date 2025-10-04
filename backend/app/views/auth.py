@@ -4,7 +4,6 @@ from flask_jwt_extended import (
     get_jwt_identity, get_jwt
 )
 from app.services.userService import UserService
-from app.utils.auth import validateToken
 from app.utils.validators import validateEmail, validatePassword
 from app.extensions import jwt
 from datetime import datetime

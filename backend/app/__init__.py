@@ -25,7 +25,8 @@ from app.views import (
     authBlueprint,
     vocabularyBlueprint,
     learningBlueprint,
-    statisticsBlueprint
+    statisticsBlueprint,
+    llmBlueprint
 )
 from app.views.main import mainBlueprint
 
@@ -103,6 +104,7 @@ def registerBlueprints(app: Flask):
     app.register_blueprint(vocabularyBlueprint)
     app.register_blueprint(learningBlueprint)
     app.register_blueprint(statisticsBlueprint)
+    app.register_blueprint(llmBlueprint)
 
     app.logger.info("All blueprints registered successfully")
 

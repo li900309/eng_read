@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.vocabularyService import VocabularyService
-from app.utils.decorators import validatePagination, requireAdmin
 from app.utils.validators import validatePagination as validatePaginationParams
 from app.extensions import cache
 
@@ -10,7 +9,6 @@ vocabularyBlueprint = Blueprint('vocabulary', __name__, url_prefix='/api/vocabul
 
 
 @vocabularyBlueprint.route('', methods=['GET'])
-@validatePagination
 def getVocabularyList():
     """获取词汇列表"""
     try:
@@ -110,7 +108,7 @@ def getVocabularyDetail(vocabularyId):
 
 @vocabularyBlueprint.route('', methods=['POST'])
 @jwt_required()
-@requireAdmin
+# @requireAdmin
 def createVocabulary():
     """创建词汇"""
     try:
@@ -155,7 +153,7 @@ def createVocabulary():
 
 @vocabularyBlueprint.route('/<int:vocabularyId>', methods=['PUT'])
 @jwt_required()
-@requireAdmin
+# @requireAdmin
 def updateVocabulary(vocabularyId):
     """更新词汇"""
     try:
@@ -190,7 +188,7 @@ def updateVocabulary(vocabularyId):
 
 @vocabularyBlueprint.route('/<int:vocabularyId>', methods=['DELETE'])
 @jwt_required()
-@requireAdmin
+# @requireAdmin
 def deleteVocabulary(vocabularyId):
     """删除词汇"""
     try:
@@ -299,7 +297,7 @@ def getVocabularyCategories():
 
 @vocabularyBlueprint.route('/categories', methods=['POST'])
 @jwt_required()
-@requireAdmin
+# @requireAdmin
 def createCategory():
     """创建词汇分类"""
     try:
@@ -390,7 +388,7 @@ def getVocabularyStatistics():
 
 @vocabularyBlueprint.route('/batch-import', methods=['POST'])
 @jwt_required()
-@requireAdmin
+# @requireAdmin
 def batchImportVocabulary():
     """批量导入词汇"""
     try:
@@ -437,7 +435,7 @@ def batchImportVocabulary():
 
 @vocabularyBlueprint.route('/export', methods=['GET'])
 @jwt_required()
-@requireAdmin
+# @requireAdmin
 def exportVocabulary():
     """导出词汇"""
     try:

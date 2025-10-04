@@ -4,7 +4,8 @@ from flask import current_app
 from sqlalchemy import and_, or_, desc, func
 import random
 import math
-from app.models.learning import UserVocabulary, LearningSession, SessionWord
+from app.models.vocabulary import UserVocabulary
+from app.models.learning import LearningSession
 from app.models.user import User
 from app.models.vocabulary import Vocabulary
 from app.extensions import db, cache

@@ -14,7 +14,9 @@ bdc/
 │   ├── product/           # 产品设计文档
 │   │   ├── product-design.md    # 详细产品设计文档
 │   │   └── product-roadmap.md   # 产品路线图与任务管理
-│   └── ...               # 其他技术文档
+│   └── technical_spec/    # 技术规格文档
+│       ├── technical-specification.md  # 系统架构和技术设计
+│       └── api-specification.md        # API接口文档
 ├── src/                   # 源代码目录（待创建）
 ├── tests/                 # 测试代码目录（待创建）
 ├── .claude/              # Claude配置
@@ -48,8 +50,8 @@ bdc/
 
 ### 开发文档
 - 项目工作规范请参考 [CLAUDE.md](CLAUDE.md)
-- 技术架构文档（待创建）
-- API接口文档（待创建）
+- [**技术规格说明书**](doc/technical_spec/technical-specification.md) - 系统架构、技术选型和实现细节
+- [**API规格说明**](doc/technical_spec/api-specification.md) - 详细的API接口文档
 
 ## 🚀 快速开始
 

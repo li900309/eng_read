@@ -1,0 +1,192 @@
+// Prisma schema for English Learning Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  username     String   @unique
+  passwordHash String   @map("password_hash")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  lastLoginAt  DateTime? @map("last_login_at")
+
+  // 用户偏好设置 (JSON as String)
+  preferences String @default("{}")
+
+  // 关联关系
+  vocabularies        UserVocabulary[]
+  learningSessions    LearningSession[]
+  achievements        UserAchievement[]
+  userReadingRecords  UserReadingRecord[]
+
+  @@map("users")
+}
+
+// 词汇分类
+model VocabularyCategory {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String?
+  isActive    Boolean @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // 关联关系
+  vocabularies Vocabulary[]
+
+  @@map("vocabulary_categories")
+}
+
+// 词汇模型
+model Vocabulary {
+  id           String @id @default(cuid())
+  word         String
+  pronunciation String?
+  definition   String
+  example      String?
+  difficulty   Int    @default(1) // 1-5 难度等级
+  frequency    Int    @default(1) // 词频等级
+  isActive     Boolean @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // 外键关联
+  categoryId String @map("category_id")
+  category   VocabularyCategory @relation(fields: [categoryId], references: [id])
+
+  // 关联关系
+  userVocabularies     UserVocabulary[]
+  sessionRecords       LearningSessionRecord[]
+
+  @@unique([word, categoryId])
+  @@map("vocabularies")
+}
+
+// 用户词汇学习记录
+model UserVocabulary {
+  id               String   @id @default(cuid())
+  masteryLevel     Int      @default(0) @map("mastery_level") // 0-5 掌握程度
+  reviewCount      Int      @default(0) @map("review_count")
+  correctCount     Int      @default(0) @map("correct_count")
+  consecutiveCorrect Int   @default(0) @map("consecutive_correct")
+  nextReviewAt     DateTime @default(now()) @map("next_review_at")
+  lastReviewAt     DateTime? @map("last_review_at")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // 外键关联
+  userId       String @map("user_id")
+  vocabularyId String @map("vocabulary_id")
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocabulary Vocabulary @relation(fields: [vocabularyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vocabularyId])
+  @@map("user_vocabularies")
+}
+
+// 学习会话
+model LearningSession {
+  id          String    @id @default(cuid())
+  sessionType String    @map("session_type") // 'vocabulary', 'reading', 'quiz'
+  startTime   DateTime  @default(now()) @map("start_time")
+  endTime     DateTime? @map("end_time")
+  totalWords  Int       @default(0) @map("total_words")
+  correctAnswers Int    @default(0) @map("correct_answers")
+  timeSpent   Int       @default(0) @map("time_spent") // 秒
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  // 外键关联
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 关联关系
+  sessionRecords LearningSessionRecord[]
+
+  @@map("learning_sessions")
+}
+
+// 学习会话详细记录
+model LearningSessionRecord {
+  id            String   @id @default(cuid())
+  isCorrect     Boolean  @map("is_correct")
+  responseTime  Int      @map("response_time") // 毫秒
+  difficulty    Int      // 题目难度
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // 外键关联
+  sessionId    String @map("session_id")
+  vocabularyId String @map("vocabulary_id")
+
+  session    LearningSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  vocabulary Vocabulary      @relation(fields: [vocabularyId], references: [id])
+
+  @@map("learning_session_records")
+}
+
+// 用户成就
+model UserAchievement {
+  id              String   @id @default(cuid())
+  achievementType String   @map("achievement_type")
+  achievementValue Int     @map("achievement_value")
+  unlockedAt      DateTime @default(now()) @map("unlocked_at")
+
+  // 外键关联
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementType, achievementValue])
+  @@map("user_achievements")
+}
+
+// 阅读文章
+model ReadingArticle {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  summary     String?
+  difficulty  Int      @default(1) // 1-5 难度等级
+  wordCount   Int      @default(0) @map("word_count")
+  readingTime Int      @default(0) @map("reading_time") // 预估阅读时间(分钟)
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // 关联关系
+  userReadingRecords UserReadingRecord[]
+
+  @@map("reading_articles")
+}
+
+// 用户阅读记录
+model UserReadingRecord {
+  id           String   @id @default(cuid())
+  readingTime  Int      @map("reading_time") // 实际阅读时间(秒)
+  comprehension Float   @default(0.0) // 理解度评分 0-1
+  wordsLearned Int      @default(0) @map("words_learned")
+  isCompleted  Boolean  @default(false) @map("is_completed")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // 外键关联
+  userId    String @map("user_id")
+  articleId String @map("article_id")
+
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article ReadingArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@map("user_reading_records")
+}

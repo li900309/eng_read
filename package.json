@@ -1,0 +1,61 @@
+{
+  "name": "nuxt-english-platform",
+  "private": true,
+  "type": "module",
+  "description": "智能英语学习平台 - Nuxt.js全栈架构",
+  "author": "Eng Read Team",
+  "license": "MIT",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "nuxt typecheck",
+    "test": "vitest",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@nuxt/image": "^1.8.1",
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@pinia/nuxt": "^0.5.5",
+    "@prisma/client": "^5.20.0",
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/nuxt": "^11.1.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "nuxt": "^3.13.2",
+    "pinia": "^2.2.6",
+    "vue": "^3.5.12",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^5.4.1",
+    "@nuxt/eslint-config": "^0.3.0",
+    "@nuxt/icon": "^1.9.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^9.15.0",
+    "eslint-plugin-vue": "^9.31.0",
+    "happy-dom": "^15.11.6",
+    "prisma": "^5.20.0",
+    "tsx": "^4.19.2",
+    "vitest": "^2.1.5",
+    "vue-tsc": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

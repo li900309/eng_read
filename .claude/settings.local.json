@@ -7,7 +7,14 @@
       "Bash(git commit:*)",
       "Bash(cat:*)",
       "Bash(git add:*)",
-      "Bash(uv run:*)"
+      "Bash(uv run:*)",
+      "Bash(npm run db:generate:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(timeout:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run postinstall:*)",
+      "Bash(curl:*)",
+      "Bash(npm run:*)"
     ],
     "deny": [],
     "ask": []

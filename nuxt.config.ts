@@ -1,0 +1,73 @@
+// Nuxt.js configuration
+export default defineNuxtConfig({
+  // Devtools
+  devtools: { enabled: true },
+
+  // Modules
+  modules: [
+    '@nuxt/icon',
+    '@nuxt/image',
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@vueuse/nuxt'
+  ],
+
+  // CSS
+  css: ['~/assets/css/main.css'],
+
+  // App config
+  app: {
+    head: {
+      title: '智能英语学习平台',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'description', content: '通过AI技术和个性化算法，提供高效的英语阅读理解学习体验' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
+    }
+  },
+
+  // Runtime config
+  runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET,
+    databaseUrl: process.env.DATABASE_URL,
+    public: {
+      apiBase: process.env.API_BASE || '/api'
+    }
+  },
+
+  // TypeScript
+  typescript: {
+    strict: false,
+    typeCheck: false
+  },
+
+  // Nitro configuration
+  nitro: {
+    experimental: {
+      wasm: true
+    }
+  },
+
+  // Compatibility mode
+  compatibility: {
+    node: true,
+    vue: true
+  },
+
+  // Build configuration
+  build: {
+    transpile: ['@headlessui/vue']
+  },
+
+  // PostCSS
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {}
+    }
+  }
+})

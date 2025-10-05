@@ -1,0 +1,83 @@
+# 依赖包
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 构建输出
+.nuxt/
+.output/
+dist/
+.nitro/
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 运行时数据
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# 日志文件
+logs
+*.log
+
+# 编辑器和IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
+
+# 缓存
+.cache/
+.parcel-cache/
+.eslintcache
+
+# 测试覆盖率
+coverage/
+*.lcov
+
+# TypeScript
+*.tsbuildinfo
+
+# Prisma
+prisma/migrations/
+
+# 静态资源生成
+.public/
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo/
+
+# OpenAI credentials (if any)
+openai-credentials.json
+
+# Local development
+.local/
+
+# Package manager lock files (keep one based on your preference)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

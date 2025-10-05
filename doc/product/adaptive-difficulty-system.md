@@ -21,9 +21,7 @@
 ### 2.1 评分模型设计
 
 #### 2.1.1 基础评分公式
-```
 用户能力分 = 基础分 + 表现加权分 - 时间衰减分
-```
 
 #### 2.1.2 评分维度与权重
 
@@ -37,22 +35,13 @@
 ### 2.2 实时评分更新机制
 
 #### 2.2.1 单次答题后的评分更新
-```python
-def update_score(current_score, question_result):
-    # question_result包含：正确性、用时、题目难度、答题类型
-    accuracy_delta = calculate_accuracy_delta(question_result)
-    speed_delta = calculate_speed_delta(question_result)
-    difficulty_delta = calculate_difficulty_delta(question_result)
-    trend_delta = calculate_trend_delta(question_result)
+系统根据以下因素动态调整用户评分：
+- 答题正确性
+- 用时表现
+- 题目难度
+- 近期趋势
 
-    # 加权计算
-    total_delta = (accuracy_delta * 0.4 +
-                   speed_delta * 0.2 +
-                   difficulty_delta * 0.25 +
-                   trend_delta * 0.15)
-
-    return apply_smoothing(current_score, total_delta)
-```
+通过加权计算得出最终分数变化。
 
 #### 2.2.2 评分变化规则
 - **完全正确且快速**：+2~5分（根据题目难度）
@@ -66,36 +55,18 @@ def update_score(current_score, question_result):
 ### 3.1 数学模型
 
 #### 3.1.1 指数移动平均（EMA）
-```
 新评分 = α × 即时评分 + (1-α) × 历史评分
-```
+
 其中：
 - α（平滑因子）= 0.2（新数据权重）
 - 历史评分 = 最近N次评分的EMA值
 
 #### 3.1.2 自适应窗口机制
-```python
-class AdaptiveWindow:
-    def __init__(self):
-        self.recent_scores = []  # 最近10次记录
-        self.stable_scores = []  # 稳定期记录
-        self.window_size = 10
-
-    def update_window(self, new_score):
-        self.recent_scores.append(new_score)
-
-        # 检测稳定性
-        if self.is_stable():
-            # 稳定期扩大窗口
-            self.window_size = min(20, self.window_size + 1)
-        else:
-            # 波动期缩小窗口
-            self.window_size = max(5, self.window_size - 1)
-
-        # 保持窗口大小
-        if len(self.recent_scores) > self.window_size:
-            self.recent_scores.pop(0)
-```
+系统使用动态窗口来平衡评分的稳定性和敏感性：
+- 初始窗口大小为10次记录
+- 当表现稳定时，扩大窗口至20次
+- 当表现波动时，缩小窗口至5次
+- 动态调整确保评分准确反映用户真实水平
 
 ### 3.2 平滑策略
 
@@ -158,11 +129,9 @@ def generate_question(user_score):
 ### 5.1 难度可视化
 
 #### 5.1.1 能力进度条
-```
 [████████████░░░░] 75分
 高级英语水平
 距离专家级别还需25分
-```
 
 #### 5.1.2 实时反馈
 - **上升提示**："太棒了！你的能力提升了2分"
@@ -177,15 +146,10 @@ def generate_question(user_score):
 - **巩固模式**：降低10-20%难度加强基础
 
 #### 5.2.2 智能建议系统
-```python
-def suggest_difficulty_mode(user_data):
-    if user_data.recent_accuracy < 0.6:
-        return "建议开启巩固模式，暂时降低难度"
-    elif user_data.recent_accuracy > 0.9:
-        return "可以尝试挑战模式，突破自我"
-    else:
-        return "当前难度正好，继续保持"
-```
+系统根据用户表现智能建议学习模式：
+- 正确率低于60%：建议开启巩固模式，暂时降低难度
+- 正确率高于90%：可以尝试挑战模式，突破自我
+- 正常范围内：当前难度正好，继续保持
 
 ## 6. 数据追踪与分析
 
@@ -205,39 +169,36 @@ def suggest_difficulty_mode(user_data):
 ### 6.2 预测与建议
 
 #### 6.2.1 能力预测模型
-```python
-def predict_future_score(current_data):
-    # 基于历史数据预测未来30天的能力水平
-    # 考虑学习频率、进步速度、遗忘曲线等因素
-    predicted_score = calculate_trend(current_data)
+系统基于历史数据预测未来30天的能力水平，考虑：
+- 学习频率
+- 进步速度
+- 遗忘曲线等因素
 
-    return {
-        "7天预测": predicted_score.week_1,
-        "30天预测": predicted_score.month_1,
-        "达成目标时间": estimate_time_to_target()
-    }
-```
+预测结果包括：
+- 7天预测
+- 30天预测
+- 达成目标时间预估
 
 #### 6.2.2 个性化学习建议
 - 识别薄弱环节并推荐专项练习
 - 根据遗忘曲线安排复习计划
 - 提供学习策略建议
 
-## 7. 技术实现要点
+## 7. 产品要求
 
-### 7.1 性能优化
-- 评分计算延迟 < 100ms
-- 使用缓存机制存储用户历史数据
-- 批量处理非关键更新
+### 7.1 性能要求
+- 评分计算响应迅速
+- 用户历史数据快速访问
+- 系统更新流畅
 
-### 7.2 数据安全
-- 加密存储用户学习数据
+### 7.2 数据管理
+- 安全存储用户学习数据
 - 定期备份学习记录
 - 支持数据导出功能
 
-### 7.3 A/B测试框架
+### 7.3 优化迭代
 - 支持不同算法的对比测试
-- 实时调整算法参数
+- 灵活调整算法参数
 - 收集用户反馈优化模型
 
 ## 8. 异常处理机制
@@ -280,4 +241,4 @@ def predict_future_score(current_data):
 
 ---
 
-*本文档为自适应难度调节系统的核心设计，技术团队可基于此文档进行详细的技术方案设计。*
+*本文档为自适应难度调节系统的产品功能设计，专注于用户体验和功能需求。*

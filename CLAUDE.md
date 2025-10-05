@@ -108,7 +108,7 @@ npm run dev          # 启动开发服务器 (端口 3000)
 ## 关键配置
 
 ### 端口配置
-- 后端: http://localhost:5000 (开发)
+- 后端: http://localhost:15000 (开发)
 - 前端: http://localhost:3000 (Vite开发服务器)
 - API代理: 前端通过 `/api` 代理到后端
 
@@ -151,7 +151,7 @@ docker-compose up -d    # 启动完整服务栈
 
 包含服务:
 - Frontend (Nginx + React): 端口3000
-- Backend (Flask): 端口3001
+- Backend (Flask): 端口15000
 - PostgreSQL: 数据库
 - Redis: 缓存
 - Prometheus + Grafana: 监控
@@ -172,13 +172,23 @@ docker-compose up -d    # 启动完整服务栈
 
 ## 代码风格要求
 
+### ⚠️ 重要：必须遵守编码规范
+**所有代码必须严格遵守 `doc/style.md` 中定义的编码规范**，这是项目的强制性要求。在提交任何代码之前，请确保：
+
+1. 仔细阅读并理解 `doc/style.md` 中的所有规范要求
+2. 使用相应的格式化工具（Black、Prettier等）自动格式化代码
+3. 运行代码检查工具确保符合规范
+4. 在代码审查中会重点检查编码规范的遵守情况
+
 ### Python (后端)
+- **必须遵守 `doc/style.md` Python编码规范**
 - 遵循PEP 8规范
 - 使用Black格式化
 - 类型注解 (Type Hints)
 - 文档字符串 (Google风格)
 
 ### TypeScript (前端)
+- **必须遵守 `doc/style.md` JavaScript/TypeScript编码规范**
 - 严格TypeScript配置
 - ESLint + Prettier
 - 组件文档注释
@@ -190,7 +200,7 @@ docker-compose up -d    # 启动完整服务栈
 2. 数据库迁移: `make db-upgrade`
 3. 运行测试: `make test` 和 `npm run test`
 4. 代码检查: `make lint` 和 `npm run lint`
-5. 提交前确保: 格式化 + 检查 + 测试通过
+5. 提交前确保: 格式化 + 检查 + 测试通过 + **编码规范符合要求**
 
 ## 调试技巧
 
